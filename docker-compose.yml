@@ -1,0 +1,19 @@
+version: "3.3"
+
+services:
+  ros2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ros2-docker
+    hostname: ros2-docker
+    stdin_open: true
+    tty: true
+
+    volumes:
+      - type: bind
+        source: /home/bb/ros2_ws
+        target: /home/bb/ros2_ws
+      - /dev:/dev
+      - /usr/bin/tegrastats:/usr/bin/tegrastats
+      - ./deviceQuery:/home/bb/deviceQuery
