@@ -12,7 +12,7 @@ services:
 
     volumes:
       - type: bind
-        source: /home/bb/ros2_ws
+        source: ${HOME}/ros2_ws
         target: /home/bb/ros2_ws
       - /dev:/dev
       - /usr/bin/tegrastats:/usr/bin/tegrastats
