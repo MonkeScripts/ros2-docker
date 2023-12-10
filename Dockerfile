@@ -45,13 +45,23 @@ RUN apt-get update && \
   xvfb \
   && apt-get clean -qq
 
+# C/C++ build
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt-get install --no-install-recommends -y \
+  g++-10 ccache
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 99
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 99
+ENV CC=/usr/lib/ccache/gcc-10
+ENV CXX=/usr/lib/ccache/g++-10
+
 RUN useradd bb --create-home --shell /bin/bash -g sudo
 RUN usermod -aG video bb
 RUN echo 'bb:bb' | chpasswd
+RUN mkdir /home/bb/.ccache && chown -R bb /home/bb/.ccache
 
 USER bb
 WORKDIR /home/bb
-COPY "./cuda-samples/Samples/deviceQuery/deviceQuery" "/home/bb/deviceQuery"
+VOLUME /home/bb/.ccache
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
-CMD ["./deviceQuery"]
+CMD ["bash"]
