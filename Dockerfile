@@ -51,7 +51,7 @@ RUN echo 'bb:bb' | chpasswd
 
 USER bb
 WORKDIR /home/bb
-# COPY "./cuda-samples/Samples/deviceQuery/deviceQuery" "/home/bb/deviceQuery"
+COPY "./cuda-samples/Samples/deviceQuery/deviceQuery" "/home/bb/deviceQuery"
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
-CMD ["bash"]
+CMD ["./deviceQuery"]

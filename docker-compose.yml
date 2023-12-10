@@ -2,13 +2,23 @@ version: "3.3"
 
 services:
   ros2:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ros2
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
     container_name: ros2-docker
     hostname: ros2-docker
     stdin_open: true
     tty: true
+
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
 
     volumes:
       - type: bind
@@ -16,4 +26,4 @@ services:
         target: /home/bb/ros2_ws
       - /dev:/dev
       - /usr/bin/tegrastats:/usr/bin/tegrastats
-      - ./deviceQuery:/home/bb/deviceQuery
+
