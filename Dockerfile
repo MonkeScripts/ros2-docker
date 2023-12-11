@@ -55,7 +55,7 @@ ENV CC=/usr/lib/ccache/gcc-10
 ENV CXX=/usr/lib/ccache/g++-10
 
 RUN useradd bb --create-home --shell /bin/bash -g sudo
-RUN usermod -aG video bb
+RUN usermod -aG video,dialout bb
 RUN echo 'bb:bb' | chpasswd
 RUN mkdir /home/bb/.ccache && chown -R bb /home/bb/.ccache
 
