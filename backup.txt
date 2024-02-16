@@ -69,8 +69,6 @@ RUN cmake ..
 RUN make
 RUN make install
 ENV RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
-WORKDIR /home/bb/
-RUN git clone https://github.com/PX4/PX4-Autopilot.git
 # Update shared library cache
 RUN ldconfig /usr/local/lib/
 USER bb
