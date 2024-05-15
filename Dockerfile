@@ -25,6 +25,7 @@ RUN apt-get update && \
   libspnav-dev \
   libusb-dev \
   lsb-release \
+  nano \
   net-tools \
   pkg-config \
   protobuf-compiler \
@@ -40,6 +41,7 @@ RUN apt-get update && \
   python3-venv \
   software-properties-common \
   sudo \
+  usbutils \
   vim \
   wget \
   xvfb \
@@ -54,27 +56,25 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 99
 ENV CC=/usr/lib/ccache/gcc-10
 ENV CXX=/usr/lib/ccache/g++-10
 
-RUN useradd bb --create-home --shell /bin/bash -g sudo
+# eProsima/Fast-DDS
+ENV RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
+
+# create user bb
+ARG USERNAME=bb
+RUN useradd $USERNAME --create-home --shell /bin/bash -g sudo
 RUN usermod -aG video,dialout bb
 RUN echo 'bb:bb' | chpasswd
-RUN mkdir /home/bb/.ccache && chown -R bb /home/bb/.ccache
-WORKDIR /home/bb/
-#set up Micro XRCE-DDS Agent
-RUN git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git 
-#Create build dir
-WORKDIR /home/bb/Micro-XRCE-DDS-Agent
-RUN mkdir build
-WORKDIR /home/bb/Micro-XRCE-DDS-Agent/build
-RUN cmake ..
-RUN make
-RUN make install
-ENV RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
-WORKDIR /home/bb/
-RUN git clone https://github.com/PX4/PX4-Autopilot.git
+RUN mkdir /home/${USERNAME}/.ccache && chown -R $USERNAME /home/${USERNAME}/.ccache
+VOLUME /home/${USERNAME}/.ccache
+COPY bashrc /home/${USERNAME}/.bashrc
+# WORKDIR /home/bb/
+RUN mkdir /home/${USERNAME}/dwone/
+
+WORKDIR /home/${USERNAME}/
+# RUN git clone https://github.com/PX4/PX4-Autopilot.git
 # Update shared library cache
 RUN ldconfig /usr/local/lib/
-USER bb
-WORKDIR /home/bb
-VOLUME /home/bb/.ccache
+USER ${USERNAME}
+
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
