@@ -66,9 +66,10 @@ RUN usermod -aG video,dialout bb
 RUN echo 'bb:bb' | chpasswd
 RUN mkdir /home/${USERNAME}/.ccache && chown -R $USERNAME /home/${USERNAME}/.ccache
 VOLUME /home/${USERNAME}/.ccache
-COPY bashrc /home/${USERNAME}/.bashrc
-# WORKDIR /home/bb/
+# COPY bashrc /home/${USERNAME}/.bashrc
 RUN mkdir /home/${USERNAME}/dwone/
+RUN mkdir /home/${USERNAME}/Micro-XRCE-DDS-Agent
+COPY Micro-XRCE-DDS-Agent/ /home/${USERNAME}/Micro-XRCE-DDS-Agent
 
 WORKDIR /home/${USERNAME}/
 # RUN git clone https://github.com/PX4/PX4-Autopilot.git
