@@ -70,6 +70,13 @@ VOLUME /home/${USERNAME}/.ccache
 RUN mkdir /home/${USERNAME}/dwone/
 RUN mkdir /home/${USERNAME}/Micro-XRCE-DDS-Agent
 COPY Micro-XRCE-DDS-Agent/ /home/${USERNAME}/Micro-XRCE-DDS-Agent
+#Create build dir
+WORKDIR /home/${USERNAME}/Micro-XRCE-DDS-Agent
+RUN mkdir build
+WORKDIR /home/bb/Micro-XRCE-DDS-Agent/build
+RUN cmake ..
+RUN make
+RUN make install
 
 WORKDIR /home/${USERNAME}/
 # RUN git clone https://github.com/PX4/PX4-Autopilot.git
