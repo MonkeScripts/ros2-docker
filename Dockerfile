@@ -1,88 +1,97 @@
-FROM dustynv/ros:humble-desktop-l4t-r35.3.1
+ARG IMAGE_NAME=dustynv/ros:humble-ros-base-l4t-r35.4.1
 
-RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive \
-  apt-get install --no-install-recommends -y \
-  build-essential \
-  atop \
-  ca-certificates \
-  cmake \
-  curl \
-  expect \
-  gdb \
-  git \
-  gnupg2 \
-  gnutls-bin \
-  iputils-ping \
-  libbluetooth-dev \
-  libccd-dev \
-  libcwiid-dev \
-  libeigen3-dev \
-  libfcl-dev \
-  libgflags-dev \
-  libgles2-mesa-dev \
-  libgoogle-glog-dev \
-  libspnav-dev \
-  libusb-dev \
-  lsb-release \
-  nano \
-  net-tools \
-  pkg-config \
-  protobuf-compiler \
-  python3-colcon-common-extensions \
-  python3-colcon-mixin \
-  python3-dbg \
-  python3-empy \
-  python3-numpy \
-  python3-rosdep \
-  python3-setuptools \
-  python3-vcstool \
-  python3-pip \
-  python3-venv \
-  software-properties-common \
-  sudo \
-  usbutils \
-  vim \
-  wget \
-  xvfb \
-  && apt-get clean -qq
+FROM ${IMAGE_NAME}
 
-# C/C++ build
-RUN DEBIAN_FRONTEND=noninteractive \
-  apt-get install --no-install-recommends -y \
-  g++-10 ccache
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 99
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 99
-ENV CC=/usr/lib/ccache/gcc-10
-ENV CXX=/usr/lib/ccache/g++-10
+ARG ZED_SDK_MAJOR=4
+ARG ZED_SDK_MINOR=1
+ARG ZED_SDK_PATCH=0
+ARG JETPACK_MAJOR=5
+ARG JETPACK_MINOR=0
+ARG L4T_MAJOR=35
+ARG L4T_MINOR=1
 
-# eProsima/Fast-DDS
-ENV RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
+ARG ROS2_DIST=humble       # ROS2 distribution
 
-# create user bb
-ARG USERNAME=bb
-RUN useradd $USERNAME --create-home --shell /bin/bash -g sudo
-RUN usermod -aG video,dialout bb
-RUN echo 'bb:bb' | chpasswd
-RUN mkdir /home/${USERNAME}/.ccache && chown -R $USERNAME /home/${USERNAME}/.ccache
-VOLUME /home/${USERNAME}/.ccache
-# COPY bashrc /home/${USERNAME}/.bashrc
-RUN mkdir /home/${USERNAME}/dwone/
-RUN mkdir /home/${USERNAME}/Micro-XRCE-DDS-Agent
-COPY Micro-XRCE-DDS-Agent/ /home/${USERNAME}/Micro-XRCE-DDS-Agent
-#Create build dir
-WORKDIR /home/${USERNAME}/Micro-XRCE-DDS-Agent
-RUN mkdir build
-WORKDIR /home/bb/Micro-XRCE-DDS-Agent/build
-RUN cmake ..
-RUN make
-RUN make install
+# ZED ROS2 Wrapper dependencies version
+ARG XACRO_VERSION=2.0.8
+ARG DIAGNOSTICS_VERSION=3.0.0
+ARG AMENT_LINT_VERSION=0.12.4
+ARG GEOGRAPHIC_INFO_VERSION=1.0.4
+ARG ROBOT_LOCALIZATION_VERSION=3.4.2
 
-WORKDIR /home/${USERNAME}/
-# RUN git clone https://github.com/PX4/PX4-Autopilot.git
-# Update shared library cache
-RUN ldconfig /usr/local/lib/
-USER ${USERNAME}
+ENV DEBIAN_FRONTEND noninteractive
 
-ENTRYPOINT ["/ros_entrypoint.sh"]
+# Enable required NVIDIA drivers
+#ENV NVIDIA_DRIVER_CAPABILITIES \
+#  ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}compute,video,utility
+
+# Disable apt-get warnings
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 42D5A192B819C5DA || true && \
+  apt-get update || true && apt-get install -y --no-install-recommends apt-utils dialog && \
+  rm -rf /var/lib/apt/lists/*
+
+ENV TZ=Europe/Paris
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \ 
+  apt-get update && \
+  apt-get install --yes lsb-release wget less udev sudo build-essential cmake python3 python3-dev python3-pip python3-wheel git jq libpq-dev zstd usbutils && \    
+  rm -rf /var/lib/apt/lists/*
+
+# Install the ZED SDK
+RUN echo "# R${L4T_MAJOR} (release), REVISION: ${L4T_MINOR}" > /etc/nv_tegra_release && \
+  apt-get update -y || true && \
+  apt-get install -y --no-install-recommends zstd wget less cmake curl gnupg2 \
+  build-essential python3 python3-pip python3-dev python3-setuptools libusb-1.0-0-dev -y && \
+  pip install protobuf && \
+  wget -q --no-check-certificate -O ZED_SDK_Linux_JP.run \
+  https://download.stereolabs.com/zedsdk/${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}/l4t${L4T_MAJOR}.${L4T_MINOR}/jetsons && \
+  chmod +x ZED_SDK_Linux_JP.run ; ./ZED_SDK_Linux_JP.run silent skip_tools && \
+  rm -rf /usr/local/zed/resources/* && \
+  rm -rf ZED_SDK_Linux_JP.run && \
+  rm -rf /var/lib/apt/lists/*
+
+# Install the ZED ROS2 Wrapper
+ENV ROS_DISTRO ${ROS2_DIST}
+
+# Copy the sources in the Docker image
+WORKDIR /root/ros2_ws/src
+COPY tmp_sources/ ./
+
+# Install missing dependencies
+WORKDIR /root/ros2_ws/src
+RUN wget https://github.com/ros/xacro/archive/refs/tags/${XACRO_VERSION}.tar.gz -O - | tar -xvz && mv xacro-${XACRO_VERSION} xacro && \
+  wget https://github.com/ros/diagnostics/archive/refs/tags/${DIAGNOSTICS_VERSION}.tar.gz -O - | tar -xvz && mv diagnostics-${DIAGNOSTICS_VERSION} diagnostics && \
+  wget https://github.com/ament/ament_lint/archive/refs/tags/${AMENT_LINT_VERSION}.tar.gz -O - | tar -xvz && mv ament_lint-${AMENT_LINT_VERSION} ament-lint && \
+  wget https://github.com/cra-ros-pkg/robot_localization/archive/refs/tags/${ROBOT_LOCALIZATION_VERSION}.tar.gz -O - | tar -xvz && mv robot_localization-${ROBOT_LOCALIZATION_VERSION} robot-localization && \
+  wget https://github.com/ros-geographic-info/geographic_info/archive/refs/tags/${GEOGRAPHIC_INFO_VERSION}.tar.gz -O - | tar -xvz && mv geographic_info-${GEOGRAPHIC_INFO_VERSION} geographic-info && \
+  cp -r geographic-info/geographic_msgs/ . && \
+  rm -rf geographic-info && \
+  git clone https://github.com/ros-drivers/nmea_msgs.git --branch ros2 && \  
+  git clone https://github.com/ros/angles.git --branch humble-devel
+
+# Check that all the dependencies are satisfied
+WORKDIR /root/ros2_ws
+RUN apt-get update -y || true && rosdep update && \
+  rosdep install --from-paths src --ignore-src -r -y && \
+  rm -rf /var/lib/apt/lists/*
+
+# Install cython
+RUN python3 -m pip install --upgrade cython
+
+# Build the dependencies and the ZED ROS2 Wrapper
+RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/install/setup.bash && \
+  colcon build --parallel-workers $(nproc) --symlink-install \
+  --event-handlers console_direct+ --base-paths src \
+  --cmake-args ' -DCMAKE_BUILD_TYPE=Release' \
+  ' -DCMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs' \
+  ' -DCMAKE_CXX_FLAGS="-Wl,--allow-shlib-undefined"' \
+  ' --no-warn-unused-cli' "
+
+WORKDIR /root/ros2_ws
+
+# Setup environment variables 
+COPY ros_entrypoint_jetson.sh /sbin/ros_entrypoint.sh
+RUN sudo chmod 755 /sbin/ros_entrypoint.sh
+
+ENTRYPOINT ["/sbin/ros_entrypoint.sh"]
 CMD ["bash"]
