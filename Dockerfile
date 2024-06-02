@@ -100,60 +100,29 @@ RUN echo "# R${L4T_MAJOR} (release), REVISION: ${L4T_MINOR}" > /etc/nv_tegra_rel
   apt-get update -y || true && \
   wget -q --no-check-certificate -O ZED_SDK_Linux_JP.run \
   https://download.stereolabs.com/zedsdk/4.1/l4t35.4/jetsons && \
-  echo "help me why does this not work" && \
   chmod +x ZED_SDK_Linux_JP.run
-RUN echo "Installing.....hehehe" && \
+RUN echo "Installing ZED SDK....." && \
   ./ZED_SDK_Linux_JP.run silent skip_tools && \
   rm -rf /usr/local/zed/resources/* && \
   rm -rf ZED_SDK_Linux_JP.run && \
   rm -rf /var/lib/apt/lists/*
 
-# # Install the ZED ROS2 Wrapper
-# WORKDIR /home/${USERNAME}/dwone/src/ 
-#  RUN git clone --recursive https://github.com/stereolabs/zed-ros2-wrapper.git
-#  RUN wget https://github.com/ros/xacro/archive/refs/tags/${XACRO_VERSION}.tar.gz -O - | tar -xvz && mv xacro-${XACRO_VERSION} xacro && \
-#   wget https://github.com/ros/diagnostics/archive/refs/tags/${DIAGNOSTICS_VERSION}.tar.gz -O - | tar -xvz && mv diagnostics-${DIAGNOSTICS_VERSION} diagnostics && \
-#   wget https://github.com/ament/ament_lint/archive/refs/tags/${AMENT_LINT_VERSION}.tar.gz -O - | tar -xvz && mv ament_lint-${AMENT_LINT_VERSION} ament-lint && \
-#   wget https://github.com/cra-ros-pkg/robot_localization/archive/refs/tags/${ROBOT_LOCALIZATION_VERSION}.tar.gz -O - | tar -xvz && mv robot_localization-${ROBOT_LOCALIZATION_VERSION} robot-localization && \
-#   wget https://github.com/ros-geographic-info/geographic_info/archive/refs/tags/${GEOGRAPHIC_INFO_VERSION}.tar.gz -O - | tar -xvz && mv geographic_info-${GEOGRAPHIC_INFO_VERSION} geographic-info && \
-#   cp -r geographic-info/geographic_msgs/ . && \
-#   rm -rf geographic-info && \
-#   git clone https://github.com/ros-drivers/nmea_msgs.git --branch ros2 && \  
-#   git clone https://github.com/ros/angles.git --branch humble-devel
-# # # Check that all the dependencies are satisfied
-# WORKDIR /home/${USERNAME}/dwone/
-# RUN apt-get update -y || true && rosdep update && \
-#   rosdep install --from-paths src --ignore-src -r -y && \
-#   rm -rf /var/lib/apt/lists/*  
-# RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/install/setup.bash && \
-#   colcon build --parallel-workers $(nproc) \
-#   --event-handlers console_direct+ --base-paths src \
-#   --cmake-args ' -DCMAKE_BUILD_TYPE=Release' \
-#   ' -DCMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs' \
-#   ' -DCMAKE_CXX_FLAGS="-Wl,--allow-shlib-undefined"' \
-#   ' --no-warn-unused-cli' "
-# RUN mkdir /home/${USERNAME}/Micro-XRCE-DDS-Agent
-# COPY Micro-XRCE-DDS-Agent/ /home/${USERNAME}/Micro-XRCE-DDS-Agent
-# #Create build dir
-# # WORKDIR /home/${USERNAME}/Micro-XRCE-DDS-Agent
-# # RUN mkdir build
-# # WORKDIR /home/bb/Micro-XRCE-DDS-Agent/build
-# # RUN cmake ..
-# # RUN make
-# # RUN make install
+RUN git config --global http.postBuffer 524288000
+RUN mkdir /home/${USERNAME}/Micro-XRCE-DDS-Agent
+COPY Micro-XRCE-DDS-Agent/ /home/${USERNAME}/Micro-XRCE-DDS-Agent
+#Create build dir
+WORKDIR /home/${USERNAME}/Micro-XRCE-DDS-Agent
+RUN mkdir build
+WORKDIR /home/bb/Micro-XRCE-DDS-Agent/build
+RUN cmake ..
+RUN make
+RUN make install
 
-WORKDIR /home/${USERNAME}/
-# RUN git clone https://github.com/PX4/PX4-Autopilot.git
 # Update shared library cache
 # RUN ldconfig /usr/local/lib/
 # Change ownership and permissions of /usr/local to allow access for the user
 RUN chown -R $USERNAME:sudo /usr/local && \
   chmod -R g+rx /usr/local
-
-# Change permissions of /etc to allow access for the user
-# RUN chmod -R g+rx /etc
-
-# Switch to the new user
 
 USER $USERNAME
 
