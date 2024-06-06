@@ -128,6 +128,6 @@ USER $USERNAME
 
 # Set the working directory
 WORKDIR /home/$USERNAME
-
+COPY ros_entrypoint.sh /ros_entrypoint.sh
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
