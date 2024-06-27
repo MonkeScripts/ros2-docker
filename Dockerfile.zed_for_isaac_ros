@@ -1,0 +1,29 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+###########################
+#   Install the ZED SDK   #
+###########################
+
+ARG NVIDIA_L4T_VERSION=36.3
+ARG ZED_SDK_VERSION=4.1
+
+RUN apt-get update -y || true && \
+  apt-get install --no-install-recommends lsb-release wget less zstd udev sudo apt-transport-https -y
+
+# Set USER environment variable due to problematic runfile
+# https://github.com/stereolabs/zed-sdk/issues/11#issuecomment-388785887
+ENV USER=admin
+RUN sudo mkdir -p /etc/udev/rules.d/
+
+WORKDIR /tmp
+
+RUN wget -q --no-check-certificate -O ZED_SDK_Linux_JP.run \
+  "https://download.stereolabs.com/zedsdk/${ZED_SDK_VERSION}/l4t${NVIDIA_L4T_VERSION}/jetsons" && \
+  chmod +x ZED_SDK_Linux_JP.run
+
+RUN echo "Installing ZED SDK....." && \
+  ./ZED_SDK_Linux_JP.run silent skip_od_module skip_python skip_drivers && \
+  rm -rf /usr/local/zed/resources/* && \
+  rm -rf ZED_SDK_Linux_JP.run && \
+  rm -rf /var/lib/apt/lists/*
