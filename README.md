@@ -59,11 +59,12 @@ source ~/.bashrc
 ## Build Isaac ROS Docker Image
 
 Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this directory>`
-with the path to this directory. Take note to enclose it with `()`.
+with the path to this directory. Take note to enclose it with `()` and ensure that 
+there are no spaces.
 
 ```
-CONFIG_IMAGE_KEY = ros2_humble.zed_for_isaac_ros.isaac_ros_vision
-CONFIG_DOCKER_SEARCH_DIRS = (<Path to this directory>)
+CONFIG_IMAGE_KEY=ros2_humble.zed_for_isaac_ros.isaac_ros_vision.isaac_ros_decoder
+CONFIG_DOCKER_SEARCH_DIRS=(<Path to this directory>)
 ```
 
 Build the docker images.
@@ -80,11 +81,11 @@ cd isaac_ros_common
 
 This is for decoding images compressed on the Jetson.
 
-Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this directory>`
+Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this directory>`.
 
 ```
-CONFIG_IMAGE_KEY = ros2_humble.zed_for_isaac_ros.isaac_ros_vision
-CONFIG_DOCKER_SEARCH_DIRS = (<Path to this directory>)
+CONFIG_IMAGE_KEY=ros2_humble.zed_for_isaac_ros.isaac_ros_vision.isaac_ros_decoder
+CONFIG_DOCKER_SEARCH_DIRS=(<Path to this directory>)
 ```
 
 Build the docker images.
