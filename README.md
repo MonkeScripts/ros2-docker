@@ -81,6 +81,10 @@ cd isaac_ros_common
 
 This is for decoding images compressed on the Jetson.
 
+Follow https://nvidia-isaac-ros.github.io/getting_started/hardware_setup/compute/index.html
+and https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html to set up 
+Isaac ROS docker dev environment.
+
 Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this directory>`.
 
 ```
