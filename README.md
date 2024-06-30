@@ -1,4 +1,4 @@
-# Installation
+# Installation on SBC
 
 ## Setup docker
 
@@ -60,6 +60,27 @@ source ~/.bashrc
 
 Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this directory>`
 with the path to this directory. Take note to enclose it with `()`.
+
+```
+CONFIG_IMAGE_KEY = ros2_humble.zed_for_isaac_ros.isaac_ros_vision
+CONFIG_DOCKER_SEARCH_DIRS = (<Path to this directory>)
+```
+
+Build the docker images.
+
+```
+cd ${ISAAC_ROS_WS}/src && \
+   git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
+
+cd isaac_ros_common
+./scripts/run_dev.sh
+```
+
+# Installation on local computer
+
+This is for decoding images compressed on the Jetson.
+
+Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this directory>`
 
 ```
 CONFIG_IMAGE_KEY = ros2_humble.zed_for_isaac_ros.isaac_ros_vision
