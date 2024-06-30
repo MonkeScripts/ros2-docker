@@ -62,8 +62,8 @@ Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this direct
 with the path to this directory. Take note to enclose it with `()`.
 
 ```
-CONFIG_IMAGE_KEY = ros2_humble.zed_for_isaac_ros.isaac_ros_vision
-CONFIG_DOCKER_SEARCH_DIRS = (<Path to this directory>)
+CONFIG_IMAGE_KEY=ros2_humble.zed_for_isaac_ros.isaac_ros_vision
+CONFIG_DOCKER_SEARCH_DIRS=(<Path to this directory>)
 ```
 
 Build the docker images.
@@ -80,11 +80,15 @@ cd isaac_ros_common
 
 This is for decoding images compressed on the Jetson.
 
+Follow https://nvidia-isaac-ros.github.io/getting_started/hardware_setup/compute/index.html
+and https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html to set up 
+Isaac ROS docker dev environment.
+
 Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this directory>`
 
 ```
-CONFIG_IMAGE_KEY = ros2_humble.zed_for_isaac_ros.isaac_ros_vision
-CONFIG_DOCKER_SEARCH_DIRS = (<Path to this directory>)
+CONFIG_IMAGE_KEY=ros2_humble.isaac_ros_decoder
+CONFIG_DOCKER_SEARCH_DIRS=(<Path to this directory>)
 ```
 
 Build the docker images.
