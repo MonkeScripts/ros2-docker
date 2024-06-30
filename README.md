@@ -62,7 +62,7 @@ Add the following to `~/.isaac_ros_common-config`. Replace `<Path to this direct
 with the path to this directory. Take note to enclose it with `()`.
 
 ```
-BASE_IMAGE_KEY = ros2_humble.zed_for_isaac_ros
+CONFIG_IMAGE_KEY = ros2_humble.zed_for_isaac_ros.isaac_ros_vision
 CONFIG_DOCKER_SEARCH_DIRS = (<Path to this directory>)
 ```
 
