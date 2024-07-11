@@ -48,7 +48,6 @@ RUN mkdir /home/${USERNAME}/.ccache ; \
 
 VOLUME /home/${USERNAME}/.ccache
 
-RUN echo "heeheeheehaw" > /home/help.txt
 # Copy scripts
 RUN mkdir -p /usr/local/bin/scripts
 COPY scripts/*entrypoint.sh /usr/local/bin/scripts/
