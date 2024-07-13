@@ -14,6 +14,10 @@ source /opt/ros/${ROS_DISTRO}/setup.bash
 
 # Restart udev daemon
 sudo service udev restart
+
+# Add foxglove-bridge alias
+echo 'alias foxglove-bridge="ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8765"' >> ~/.bash_aliases
+
 if [ -d /home/admin/dwone ]; then 
         cd /home/admin/dwone ; 
         echo "rosdep updating....." ; 
@@ -21,6 +25,5 @@ if [ -d /home/admin/dwone ]; then
     else 
         echo "directory not hereee" > /home/help.txt ; 
 fi
-  
 
 $@

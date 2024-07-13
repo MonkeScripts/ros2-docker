@@ -58,24 +58,24 @@ source ~/.bashrc
 
 ## Build Isaac ROS Docker Image
 
-Copy `isaac_ros_jp6.0/.isaac_ros_common-config` to `~/.isaac_ros_common-config`. 
-Set `CONFIG_DOCKER_SEARCH_DIRS` as `(<Path to this directory>/isaac_ros_jp6.0)`
-with the path to this directory. Take note to enclose it with `()` and ensure that 
-there are no spaces.
+1. Copy `isaac_ros_jp6.0/.isaac_ros_common-config` to `~/.isaac_ros_common-config`. 
+Set `CONFIG_DOCKER_SEARCH_DIRS` as `(<Path to this directory>/isaac_ros_jp6.0)`. 
+Take note to enclose it with `()` and ensure that there are no spaces.
 
-Copy the run script.
-
-```
-cp isaac_ros_jp6.0/run_main.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts
-```
-
-Build the docker images.
+2. Clone `isaac_ros_common`.
 
 ```
 cd ${ISAAC_ROS_WS}/src && \
    git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
+```
 
-cd isaac_ros_common
+3. Copy our run script (`isaac_ros_jp6.0/run_main.sh`) to 
+`${ISAAC_ROS_WS}/src/isaac_ros_common/scripts`
+
+4. Build the docker images.
+
+```
+cd ${ISAAC_ROS_WS}/src/isaac_ros_common
 ./scripts/run_main.sh
 ```
 

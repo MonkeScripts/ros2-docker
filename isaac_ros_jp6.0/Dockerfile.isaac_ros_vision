@@ -9,6 +9,3 @@ RUN apt-get update -y || true && \
   ros-humble-isaac-ros-h264-decoder \
   ros-humble-isaac-ros-yolov8 ros-humble-isaac-ros-tensor-rt ros-humble-isaac-ros-dnn-image-encoder \
   ros-humble-foxglove-bridge
-
-# Add foxglove-bridge alias
-RUN echo 'alias foxglove-bridge="ros2 launch foxglove_bridge foxglove_bridge_launch.xml port:=8765"' >> ~/.bash_aliases
