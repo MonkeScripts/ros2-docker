@@ -69,10 +69,19 @@ cd ${ISAAC_ROS_WS}/src && \
    git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
 ```
 
-3. Copy our run script (`isaac_ros_jp6.0/run_main.sh`) to 
-`${ISAAC_ROS_WS}/src/isaac_ros_common/scripts`
+3. Copy our run script (from this directory)
 
-4. Build the docker images.
+```
+cp isaac_ros_jp6.0/run_main.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts
+```
+
+4. Copy our entrypoint script (from this directory)
+
+```
+cp isaac_ros_jp6.0/workspace-entrypoint.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/docker/scripts/workspace-entrypoint.sh
+```
+
+5. Build the docker images.
 
 ```
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common
