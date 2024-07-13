@@ -63,8 +63,8 @@ with the path to this directory. Take note to enclose it with `()` and ensure th
 there are no spaces.
 
 ```
-CONFIG_IMAGE_KEY=ros2_humble.zed_for_isaac_ros.isaac_ros_vision.isaac_ros_decoder
-CONFIG_DOCKER_SEARCH_DIRS=(<Path to this directory>)
+CONFIG_IMAGE_KEY=ros2_humble.isaac_ros_vision.micro_xrce_dds_agent
+CONFIG_DOCKER_SEARCH_DIRS=(<Path to this directory>/isaac_ros_jp6.0)
 ```
 
 Build the docker images.
@@ -92,12 +92,4 @@ CONFIG_IMAGE_KEY=ros2_humble.zed_for_isaac_ros.isaac_ros_vision.isaac_ros_decode
 CONFIG_DOCKER_SEARCH_DIRS=(<Path to this directory>)
 ```
 
-Build the docker images.
-
-```
-cd ${ISAAC_ROS_WS}/src && \
-   git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
-
-cd isaac_ros_common
-./scripts/run_dev.sh
-```
+Follow [build instructions for SBC](#build-isaac-ros-docker-image)
