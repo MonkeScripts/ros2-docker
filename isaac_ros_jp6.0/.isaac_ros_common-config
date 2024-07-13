@@ -1,0 +1,3 @@
+CONFIG_IMAGE_KEY=ros2_humble.isaac_ros_vision.micro_xrce_dds_agent
+
+CONFIG_DOCKER_SEARCH_DIRS=(/home/bb/workspaces/ros2-docker/isaac_ros_jp6.0)
