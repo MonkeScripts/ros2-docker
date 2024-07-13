@@ -1,0 +1,15 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+####################################
+#   Install Micro-XRCE-DDS-Agent   #
+####################################
+WORKDIR /home/
+RUN git config --global http.postBuffer 524288000 && \
+git clone https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
+WORKDIR /home/Micro-XRCE-DDS-Agent/
+RUN mkdir build 
+WORKDIR /home/Micro-XRCE-DDS-Agent/build
+RUN cmake ..
+RUN make
+RUN make install
