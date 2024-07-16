@@ -58,30 +58,36 @@ source ~/.bashrc
 
 ## Build Isaac ROS Docker Image
 
-1. Copy `isaac_ros_jp6.0/.isaac_ros_common-config` to `~/.isaac_ros_common-config`. 
-Set `CONFIG_DOCKER_SEARCH_DIRS` as `(<Path to this directory>/isaac_ros_jp6.0)`. 
-Take note to enclose it with `()` and ensure that there are no spaces.
-
-2. Clone `isaac_ros_common`.
+1. Clone `isaac_ros_common`.
 
 ```
 cd ${ISAAC_ROS_WS}/src && \
    git clone https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
 ```
 
-3. Copy our run script (from this directory)
+2. Edit the Isaac ROS Common config file by setting `CONFIG_DOCKER_SEARCH_DIRS` as 
+`(<Path to this directory>/isaac_ros_jp6.0)`. Take note to enclose it with `()` and 
+ensure that there are no spaces. Change `isaac_ros_jp6.0` where required.
+
+3. Copy the required config files and scripts.
+
+For `isaac_ros_jp6.0`:
 
 ```
+cp isaac_ros_jp6.0/.isaac_ros_common-config ~/.isaac_ros_common-config 
 cp isaac_ros_jp6.0/run_main.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts
-```
-
-4. Copy our entrypoint script (from this directory)
-
-```
 cp isaac_ros_jp6.0/workspace-entrypoint.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/docker/scripts/workspace-entrypoint.sh
 ```
 
-5. Build the docker images.
+For `isaac_ros_x64`:
+
+```
+cp isaac_ros_x64/.isaac_ros_common-config ~/.isaac_ros_common-config 
+cp isaac_ros_x64/run_main.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts
+cp isaac_ros_x64/workspace-entrypoint.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/docker/scripts/workspace-entrypoint.sh
+```
+
+4. Build the docker images.
 
 ```
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common
