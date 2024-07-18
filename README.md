@@ -1,5 +1,3 @@
-# Table of Contents
-- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
   - [Installation on SBC](#installation-on-sbc)
     - [Setup docker](#setup-docker)
