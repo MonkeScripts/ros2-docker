@@ -67,7 +67,7 @@ cd ${ISAAC_ROS_WS}/src && \
 
 2. Edit the Isaac ROS Common config file by setting `CONFIG_DOCKER_SEARCH_DIRS` as 
 `(<Path to this directory>/isaac_ros_jp6.0)`. Take note to enclose it with `()` and 
-ensure that there are no spaces. Change `isaac_ros_jp6.0` where required.
+ensure that there are no spaces. Change `isaac_ros_jp6.0` to `isaac_ros_x64` where required.
 
 3. Copy the required config files and scripts.
 
