@@ -1,18 +1,34 @@
-# Installation on SBC
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+  - [Installation on SBC](#installation-on-sbc)
+    - [Setup docker](#setup-docker)
+      - [Install Jetpack](#install-jetpack)
+      - [Install docker](#install-docker)
+      - [Add docker to user group](#add-docker-to-user-group)
+    - [Setup Isaac ROS](#setup-isaac-ros)
+  - [Installation on local computer](#installation-on-local-computer)
+- [Build Isaac ROS Docker Image](#build-isaac-ros-docker-image)
+- [Notes](#notes)
+  - [TODO](#todo)
 
-## Setup docker
+# Installation
+
+## Installation on SBC
+
+### Setup docker
 
 Source: https://nvidia-isaac-ros.github.io/getting_started/hardware_setup/compute/index.html
 
 Commands from the above website are pasted below:
 
-### Install Jetpack
+#### Install Jetpack
 
 ```
 sudo apt install nvidia-jetpack
 ```
 
-### Install docker
+#### Install docker
 
 ```
 # Add Docker's official GPG key:
@@ -32,14 +48,14 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-### Add docker to user group
+#### Add docker to user group
 
 ```
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-## Setup Isaac ROS
+### Setup Isaac ROS
 
 Source: https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html
 
@@ -56,7 +72,17 @@ echo "export ISAAC_ROS_WS=${HOME}/workspaces/isaac_ros-dev/" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-## Build Isaac ROS Docker Image
+## Installation on local computer
+
+This is for decoding images compressed on the Jetson.
+
+Follow https://nvidia-isaac-ros.github.io/getting_started/hardware_setup/compute/index.html
+and https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html to set up 
+Isaac ROS docker dev environment.
+
+# Build Isaac ROS Docker Image
+
+For SBC, use `isaac_ros_jp6.0`. For local computer, use `isaac_ros_x64`.
 
 1. Clone `isaac_ros_common`.
 
@@ -108,16 +134,10 @@ cd ${ISAAC_ROS_WS}/src/isaac_ros_common
 ./scripts/run_main.sh
 ```
 
-# Installation on local computer
+# Notes
 
-This is for decoding images compressed on the Jetson.
-
-Follow https://nvidia-isaac-ros.github.io/getting_started/hardware_setup/compute/index.html
-and https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html to set up 
-Isaac ROS docker dev environment.
-
-Follow ["Build Isaac ROS Docker Image" instructions for SBC](#build-isaac-ros-docker-image), 
-using `isaac_ros_x64` instead of `isaac_ros_jp6.0`.
+## TODO
+- (Good to have) combine Isaac ROS and Husarnet default Fast RTPS scripts to poll topics outside of container while publishing over the internet
 
 **NOTE: As of Jul 18 2024, there is a bug with `moveit_task_constructor`. Comment out the following lines in
 `~/workspaces/isaac_ros-dev/src/isaac_ros_common/docker/Dockerfile.ros2_humble`:**
