@@ -7,6 +7,7 @@
     - [Setup Isaac ROS](#setup-isaac-ros)
   - [Installation on local computer](#installation-on-local-computer)
 - [Build Isaac ROS Docker Image](#build-isaac-ros-docker-image)
+- [Start Docker Container](#start-docker-container)
 - [Notes](#notes)
   - [TODO](#todo)
   - [Issues](#issues)
@@ -127,6 +128,15 @@ cp isaac_ros_x64/workspace-entrypoint.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/do
 ```
 
 4. Build the docker images.
+
+```
+cd ${ISAAC_ROS_WS}/src/isaac_ros_common
+./scripts/run_main.sh
+```
+
+# Start Docker Container
+
+Run the same script used to build the docker images.
 
 ```
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common
