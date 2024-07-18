@@ -148,6 +148,7 @@ cd ${ISAAC_ROS_WS}/src/isaac_ros_common
 ## TODO
 
 - (Good to have) combine Isaac ROS and Husarnet default Fast RTPS scripts to poll topics outside of container while publishing over the internet
+- (Good to have) Consider https://github.com/husarnet/ros-docker/tree/main
 
 ## Issues
 
