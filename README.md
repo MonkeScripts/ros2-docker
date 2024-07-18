@@ -9,6 +9,7 @@
 - [Build Isaac ROS Docker Image](#build-isaac-ros-docker-image)
 - [Notes](#notes)
   - [TODO](#todo)
+  - [Issues](#issues)
 
 # Installation
 
@@ -135,7 +136,10 @@ cd ${ISAAC_ROS_WS}/src/isaac_ros_common
 # Notes
 
 ## TODO
+
 - (Good to have) combine Isaac ROS and Husarnet default Fast RTPS scripts to poll topics outside of container while publishing over the internet
+
+## Issues
 
 **NOTE: As of Jul 18 2024, there is a bug with `moveit_task_constructor`. Comment out the following lines in
 `~/workspaces/isaac_ros-dev/src/isaac_ros_common/docker/Dockerfile.ros2_humble`:**
