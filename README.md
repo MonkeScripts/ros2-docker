@@ -66,8 +66,22 @@ cd ${ISAAC_ROS_WS}/src && \
 ```
 
 2. Edit the Isaac ROS Common config file by setting `CONFIG_DOCKER_SEARCH_DIRS` as 
-`(<Path to this directory>/isaac_ros_jp6.0)`. Take note to enclose it with `()` and 
-ensure that there are no spaces. Change `isaac_ros_jp6.0` to `isaac_ros_x64` where required.
+
+For `isaac_ros_jp6.0`:
+
+```
+(<Path to this directory>/isaac_ros_jp6.0)
+```
+
+For `isaac_ros_x64`:
+
+```
+(<Path to this directory>/isaac_ros_jp6.0)
+```
+
+By default, `<Path to this directory>` is `$HOME/workspaces/ros2-docker`.
+
+Take note to enclose it with `()` and ensure that there are no spaces.
 
 3. Copy the required config files and scripts.
 
@@ -102,4 +116,42 @@ Follow https://nvidia-isaac-ros.github.io/getting_started/hardware_setup/compute
 and https://nvidia-isaac-ros.github.io/getting_started/dev_env_setup.html to set up 
 Isaac ROS docker dev environment.
 
-Follow ["Build Isaac ROS Docker Image" instructions for SBC](#build-isaac-ros-docker-image)
+Follow ["Build Isaac ROS Docker Image" instructions for SBC](#build-isaac-ros-docker-image), 
+using `isaac_ros_x64` instead of `isaac_ros_jp6.0`.
+
+**NOTE: As of Jul 18 2024, there is a bug with `moveit_task_constructor`. Comment out the following lines in
+`~/workspaces/isaac_ros-dev/src/isaac_ros_common/docker/Dockerfile.ros2_humble`:**
+
+```
+# Install MoveIt task constructor from source.  The "demo" package depends on moveit_resources_panda_moveit_config,
+# installed from source above.
+
+RUN --mount=type=cache,target=/var/cache/apt \
+    mkdir -p ${ROS_ROOT}/src && cd ${ROS_ROOT}/src \
+    && git clone https://github.com/ros-planning/moveit_task_constructor.git -b humble \
+    && cd moveit_task_constructor && source ${ROS_ROOT}/setup.bash \
+    && cd msgs && bloom-generate rosdebian && fakeroot debian/rules binary \
+    && cd ../ && apt-get install -y ./*.deb && rm ./*.deb \
+    && cd rviz_marker_tools && bloom-generate rosdebian && fakeroot debian/rules binary \
+    && cd ../ && apt-get install -y ./*.deb && rm ./*.deb \
+    && cd core && bloom-generate rosdebian && fakeroot debian/rules binary DEB_BUILD_OPTIONS=nocheck \
+    && cd ../ && apt-get install -y ./*.deb && rm ./*.deb \
+    && cd capabilities && bloom-generate rosdebian && fakeroot debian/rules binary DEB_BUILD_OPTIONS=nocheck \
+    && cd ../ && apt-get install -y ./*.deb && rm ./*.deb \
+    && cd visualization && bloom-generate rosdebian && fakeroot debian/rules binary DEB_BUILD_OPTIONS=nocheck \
+    && cd ../ && apt-get install -y ./*.deb && rm ./*.deb \
+    && cd demo && bloom-generate rosdebian && fakeroot debian/rules binary DEB_BUILD_OPTIONS=nocheck \
+    && cd ../ && apt-get install -y ./*.deb && rm ./*.deb
+```
+
+and 
+
+```
+# Install moveit2_tutorials from source (depends on moveit_hybrid_planning).
+RUN --mount=type=cache,target=/var/cache/apt \
+    mkdir -p ${ROS_ROOT}/src && cd ${ROS_ROOT}/src \
+    && git clone https://github.com/ros-planning/moveit2_tutorials.git -b humble \
+    && cd moveit2_tutorials && source ${ROS_ROOT}/setup.bash \
+    && bloom-generate rosdebian && fakeroot debian/rules binary \
+    && cd ../ && apt-get install -y ./*.deb && rm ./*.deb
+```
