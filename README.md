@@ -102,7 +102,7 @@ For `isaac_ros_jp6.0`:
 For `isaac_ros_x64`:
 
 ```
-(<Path to this directory>/isaac_ros_jp6.0)
+(<Path to this directory>/isaac_ros_x64)
 ```
 
 By default, `<Path to this directory>` is `$HOME/workspaces/ros2-docker`.
@@ -124,7 +124,6 @@ For `isaac_ros_x64`:
 ```
 cp isaac_ros_x64/.isaac_ros_common-config ~/.isaac_ros_common-config 
 cp isaac_ros_x64/run_main.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts
-cp isaac_ros_x64/workspace-entrypoint.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/docker/scripts/workspace-entrypoint.sh
 ```
 
 4. Build the docker images.
