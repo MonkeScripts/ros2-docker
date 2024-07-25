@@ -72,6 +72,35 @@ echo "export ISAAC_ROS_WS=${HOME}/workspaces/isaac_ros-dev/" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+### Jetson Clocks (Optional)
+
+This maximises Jetson performance.
+
+Create the file `/etc/systemd/system/jetsonClocks.service` and add the following lines:
+
+```
+[Unit]
+Description=Maximize Jetson Performance
+After=nvpmodel.service
+Requires=nvpmodel.service
+
+[Service]
+ExecStart=/usr/bin/jetson_clocks
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then run the following commands
+
+```
+sudo chmod 644 /etc/systemd/system/jetsonClocks.service
+sudo systemctl daemon-reload
+sudo systemctl enable jetsonClocks.service
+```
+
+Reboot the computer to let the changes take effect.
+
 ## Installation on local computer
 
 This is for decoding images compressed on the Jetson.
