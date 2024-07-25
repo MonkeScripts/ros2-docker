@@ -74,7 +74,7 @@ source ~/.bashrc
 
 ### Jetson Clocks (Optional)
 
-This maximises Jetson performance.
+Running `sudo jetson_clocks` maximises Jetson performance. We can make `jetson_clocks` run on start up.
 
 Create the file `/etc/systemd/system/jetsonClocks.service` and add the following lines:
 
