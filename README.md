@@ -101,6 +101,10 @@ sudo systemctl enable jetsonClocks.service
 
 Reboot the computer to let the changes take effect.
 
+### Add Authorized SSH Keys (Optional)
+
+To avoid keying in the password each time login in via SSH, add the client computer's public key (e.g. `id_rsa.pub`) into `~/.ssh/authorized_keys`. Note that `~/.ssh/authorized_keys` should be a **file** not a folder.
+
 ## Installation on local computer
 
 This is for decoding images compressed on the Jetson.
