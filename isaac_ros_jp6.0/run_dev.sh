@@ -186,6 +186,11 @@ if [[ ! -z "$CONFIG_CONTAINER_NAME_SUFFIX" ]] ; then
 fi
 CONTAINER_NAME="$BASE_NAME-container"
 
+# Remove any exited containers.
+if [ "$(docker ps -a --quiet --filter status=exited --filter name=$CONTAINER_NAME)" ]; then
+    docker rm $CONTAINER_NAME > /dev/null
+fi
+
 # Re-use existing container.
 if [ "$(docker ps -a --quiet --filter status=running --filter name=$CONTAINER_NAME)" ]; then
     print_info "Attaching to running container: $CONTAINER_NAME"
@@ -195,6 +200,22 @@ fi
 
 # Summarize launch
 print_info "Launching Isaac ROS Dev container with image key ${BASE_IMAGE_KEY}: ${ISAAC_ROS_DEV_DIR}"
+
+# Build image to launch
+if [[ $SKIP_IMAGE_BUILD -ne 1 ]]; then
+    print_info "Building $BASE_IMAGE_KEY base as image: $BASE_NAME"
+   $ROOT/build_image_layers.sh --image_key "$BASE_IMAGE_KEY" --image_name "$BASE_NAME"
+
+    # Check result
+    if [ $? -ne 0 ]; then
+        if [[ -z $(docker image ls --quiet $BASE_NAME) ]]; then
+            print_error "Building image failed and no cached image found for $BASE_NAME, aborting."
+            exit 1
+        else
+            print_warning "Unable to build image, but cached image found."
+        fi
+    fi
+fi
 
 # Check image is available
 if [[ -z $(docker image ls --quiet $BASE_NAME) ]]; then
@@ -268,5 +289,5 @@ docker run -it --rm \
     --entrypoint /usr/local/bin/scripts/workspace-entrypoint.sh \
     --mount type=bind,source=$HOME/Dwone/,target=/workspaces/drone/ \
     --workdir /workspaces \
-    isaac_ros_dev-aarch64:version1 \
+    $BASE_NAME \
     /bin/bash

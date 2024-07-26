@@ -16,6 +16,8 @@
 
 # Installation
 
+*For ease of installation, save this directory as `~/workspaces/ros2-docker`.*
+
 ## Installation on SBC
 
 ### Setup docker
@@ -146,28 +148,39 @@ By default, `<Path to this directory>` is `$HOME/workspaces/ros2-docker`.
 
 Take note to enclose it with `()` and ensure that there are no spaces.
 
-3. Copy the required config files and scripts.
+3. Create copies and symbolic links for the required config files and scripts.
+
+By default, the path to this directory is `$HOME/workspaces/ros2-docker`. Replace it below with the path to this directory 
+if yours is different.
 
 For `isaac_ros_jp6.0`:
 
 ```
-cp isaac_ros_jp6.0/.isaac_ros_common-config ~/.isaac_ros_common-config 
-cp isaac_ros_jp6.0/run_main.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts
-cp isaac_ros_jp6.0/workspace-entrypoint.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/docker/scripts/workspace-entrypoint.sh
+export SOURCE_DIRECTORY=$HOME/workspaces/ros2-docker/isaac_ros_jp6.0
+ln -sf $SOURCE_DIRECTORY/.isaac_ros_common-config   ~/.isaac_ros_common-config 
+ln -sf $SOURCE_DIRECTORY/run_dev.sh                 ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts/run_dev.sh
+ln -sf $SOURCE_DIRECTORY/run_main.sh                ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts/run_main.sh
+cp $SOURCE_DIRECTORY/workspace-entrypoint.sh        ${ISAAC_ROS_WS}/src/isaac_ros_common/docker/scripts/workspace-entrypoint.sh
+unset SOURCE_DIRECTORY
 ```
 
 For `isaac_ros_x64`:
 
 ```
-cp isaac_ros_x64/.isaac_ros_common-config ~/.isaac_ros_common-config 
-cp isaac_ros_x64/run_main.sh ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts
+export SOURCE_DIRECTORY=$HOME/workspaces/ros2-docker/isaac_ros_x64
+ln -sf $SOURCE_DIRECTORY/.isaac_ros_common-config   ~/.isaac_ros_common-config 
+ln -sf $SOURCE_DIRECTORY/run_dev.sh                 ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts/run_dev.sh
+ln -sf $SOURCE_DIRECTORY/run_main.sh                ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts/run_main.sh
+unset SOURCE_DIRECTORY
 ```
+
+**Note that `workspace-entrypoint.sh` is copied and not linked** to support Docker's `COPY`.
 
 4. Build the docker images.
 
 ```
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common
-./scripts/run_main.sh
+./scripts/run_dev.sh
 ```
 
 # Start Docker Container
@@ -176,7 +189,7 @@ Run the same script used to build the docker images.
 
 ```
 cd ${ISAAC_ROS_WS}/src/isaac_ros_common
-./scripts/run_main.sh
+./scripts/run_dev.sh
 ```
 
 # Notes
