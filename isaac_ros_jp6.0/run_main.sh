@@ -258,8 +258,8 @@ if [[ $VERBOSE -eq 1 ]]; then
 fi
 
 # Load environment variables from .env file
-ENV_FILE=$HOME/workspaces/ros2-docker/environments/.env
-if [ -e ENV_FILE ]; then
+ENV_FILE="$HOME/workspaces/ros2-docker/environments/.env"
+if [ -f "${ENV_FILE}" ]; then
     export $(grep -v '^#' $ENV_FILE | xargs)
 fi
 
