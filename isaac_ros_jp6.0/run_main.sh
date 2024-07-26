@@ -256,6 +256,13 @@ print_info "Running $CONTAINER_NAME"
 if [[ $VERBOSE -eq 1 ]]; then
     set -x
 fi
+
+# Load environment variables from .env file
+ENV_FILE=$HOME/workspaces/ros2-docker/environments/.env
+if [ -e ENV_FILE ]; then
+    export $(grep -v '^#' $ENV_FILE | xargs)
+fi
+
 docker run -it --rm \
     --privileged \
     --network host \
@@ -268,5 +275,5 @@ docker run -it --rm \
     --entrypoint /usr/local/bin/scripts/workspace-entrypoint.sh \
     --mount type=bind,source=$HOME/Dwone/,target=/workspaces/drone/ \
     --workdir /workspaces \
-    isaac_ros_dev-aarch64:version1 \
+    $BUILT_DOCKER_CONTAINER_NAME \
     /bin/bash
