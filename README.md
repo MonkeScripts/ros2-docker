@@ -15,6 +15,9 @@
 - [Notes](#notes)
   - [TODO](#todo)
   - [Issues](#issues)
+    - [1. MoveIt](#1-moveit)
+    - [2. Husarnet](#2-husarnet)
+    - [3. Sourcing of ROS Workspaces on Entry](#3-sourcing-of-ros-workspaces-on-entry)
 
 # Installation
 
@@ -219,6 +222,8 @@ If the path of your file is different, change `ENV_FILE` in `run_main.sh`.
 
 ## Issues
 
+### 1. MoveIt
+
 **NOTE: As of Jul 18 2024, there is a bug with `moveit_task_constructor`. Comment out the following lines in
 `~/workspaces/isaac_ros-dev/src/isaac_ros_common/docker/Dockerfile.ros2_humble`:**
 
@@ -255,3 +260,12 @@ RUN --mount=type=cache,target=/var/cache/apt \
     && bloom-generate rosdebian && fakeroot debian/rules binary \
     && cd ../ && apt-get install -y ./*.deb && rm ./*.deb
 ```
+
+### 2. Husarnet
+
+- For now, install and join the network outside Docker. Unable to join while building the Docker containers.
+- For now, run `husarnet-dds singleshot` inside the running container. No effect when starting in Dockerfiles.
+
+### 3. Sourcing of ROS Workspaces on Entry
+
+- Only the first terminal instance running the Docker container source the ROS workspaces automatically. Subsequent instances do not. 
