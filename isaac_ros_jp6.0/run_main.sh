@@ -287,7 +287,7 @@ docker run -it --rm \
     --runtime nvidia \
     --user="admin" \
     --entrypoint /usr/local/bin/scripts/workspace-entrypoint.sh \
-    --mount type=bind,source=/home/bb/Dwone/,target=/workspaces/drone/ \
-    --workdir /workspaces/isaac_ros-dev \
+    --mount type=bind,source=$HOME/Dwone/,target=/workspaces/drone/ \
+    --workdir /workspaces \
     $BASE_NAME \
     /bin/bash
