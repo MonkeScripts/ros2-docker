@@ -5,6 +5,8 @@
       - [Install docker](#install-docker)
       - [Add docker to user group](#add-docker-to-user-group)
     - [Setup Isaac ROS](#setup-isaac-ros)
+    - [Jetson Clocks (Optional)](#jetson-clocks-optional)
+    - [Add Authorized SSH Keys (Optional)](#add-authorized-ssh-keys-optional)
   - [Installation on local computer](#installation-on-local-computer)
 - [Build Isaac ROS Docker Image](#build-isaac-ros-docker-image)
 - [Start Docker Container](#start-docker-container)
@@ -54,6 +56,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 sudo usermod -aG docker $USER
 newgrp docker
 ```
+
+Reboot the computer for the changes to take effect.
 
 ### Setup Isaac ROS
 

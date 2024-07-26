@@ -21,4 +21,4 @@ RUN sudo chmod +x /usr/local/bin/husarnet-dds
 # 4. Configure Husarnet DDS
 ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 ENV FASTRTPS_DEFAULT_PROFILES_FILE=/var/tmp/husarnet-fastdds-simple.xml
-RUN husarnet-dds singleshot
+CMD (husarnet-daemon &) && husarnet-dds singleshot
