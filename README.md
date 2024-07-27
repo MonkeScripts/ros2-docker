@@ -273,7 +273,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 ### 4. Jetson Clocks
 
-- Even after setting Jetson Clocks to run on startup [above](#jetson-clocks-optional), it may randomly fail to start up due to a bug with `nvpmodel`. Simply do:
+- Even after setting Jetson Clocks to run on startup [above](#jetson-clocks-optional), it may randomly fail to start up due to a bug with `nvpmodel` (https://forums.developer.nvidia.com/t/segfault-in-usr-sbin-nvpmodel/295010/16). Simply do:
 
 ```
 sudo systemctl restart nvpmodel.service
