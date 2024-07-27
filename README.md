@@ -18,6 +18,7 @@
     - [1. MoveIt](#1-moveit)
     - [2. Husarnet](#2-husarnet)
     - [3. Sourcing of ROS Workspaces on Entry](#3-sourcing-of-ros-workspaces-on-entry)
+    - [4. Jetson Clocks](#4-jetson-clocks)
 
 # Installation
 
@@ -269,3 +270,14 @@ RUN --mount=type=cache,target=/var/cache/apt \
 ### 3. Sourcing of ROS Workspaces on Entry
 
 - Only the first terminal instance running the Docker container source the ROS workspaces automatically. Subsequent instances do not. 
+
+### 4. Jetson Clocks
+
+- Even after setting Jetson Clocks to run on startup [above](#jetson-clocks-optional), it may randomly fail to start up due to a bug with `nvpmodel`. Simply do:
+
+```
+sudo systemctl restart nvpmodel.service
+sudo systemctl restart jetsonClocks.service
+```
+
+Where the second line can be replaced with `sudo jetson_clocks` if the service is not set up.
