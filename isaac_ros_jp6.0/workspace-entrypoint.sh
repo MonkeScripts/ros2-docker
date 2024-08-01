@@ -32,7 +32,9 @@ fi
 if [ -d /workspaces/drone ]; then 
     cd /workspaces/drone ; 
     echo "rosdep updating....." ; 
-    rosdep install --from-paths src -y --ignore-src ; 
+    # TODO: Bug fix intercomm_msgs
+    # rosdep install --from-paths src -y --ignore-src ; 
+    rosdep install --from-paths src --ignore-src --skip-keys intercomm_msgs -y ;
     source install/setup.bash
 fi
 
