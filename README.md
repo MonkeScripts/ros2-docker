@@ -224,7 +224,9 @@ If the path of your file is different, change `ENV_FILE` in `run_main.sh`.
 
 ### 1. MoveIt
 
-**NOTE: As of Jul 18 2024, there is a bug with `moveit_task_constructor`. Comment out the following lines in
+**UPDATE: As of 2 Aug 2024, this issue seems to be fixed.**
+
+**NOTE: As of 18 Jul 2024, there is a bug with `moveit_task_constructor`. Comment out the following lines in
 `~/workspaces/isaac_ros-dev/src/isaac_ros_common/docker/Dockerfile.ros2_humble`:**
 
 ```
