@@ -268,12 +268,12 @@ docker run -it --rm \
     --network host \
     ${DOCKER_ARGS[@]} \
     -v $ISAAC_ROS_DEV_DIR:/workspaces/isaac_ros-dev \
+    -v $HOME/workspaces/drone:/workspaces/drone \
     -v /etc/localtime:/etc/localtime:ro \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
     --entrypoint /usr/local/bin/scripts/workspace-entrypoint.sh \
-    --mount type=bind,source=$HOME/Dwone/,target=/workspaces/drone/ \
     --workdir /workspaces \
     $BUILT_DOCKER_CONTAINER_NAME \
     /bin/bash
