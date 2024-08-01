@@ -79,7 +79,7 @@ sudo systemctl daemon-reload && sudo systemctl restart docker
 sudo apt-get install git-lfs
 git lfs install --skip-repo
 
-mkdir -p  ~/workspaces/isaac_ros-dev/src
+mkdir -p ~/workspaces/isaac_ros-dev/src
 echo "export ISAAC_ROS_WS=${HOME}/workspaces/isaac_ros-dev/" >> ~/.bashrc
 source ~/.bashrc
 ```
@@ -156,8 +156,7 @@ Take note to enclose it with `()` and ensure that there are no spaces.
 
 3. Create copies and symbolic links for the required config files and scripts.
 
-By default, the path to this directory is `$HOME/workspaces/ros2-docker`. Replace it below with the path to this directory 
-if yours is different.
+By default, the path to this directory is `$HOME/workspaces/ros2-docker`. Replace it below with the path to this directory if yours is different.
 
 For `isaac_ros_jp6.0`:
 
