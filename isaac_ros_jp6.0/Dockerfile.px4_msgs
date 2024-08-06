@@ -1,0 +1,11 @@
+# Additional dependencies for the ROS2 packages px4_msgs and px4_msg_converter
+
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+RUN apt-get update -y || true && \
+  apt-get install -y \
+  ccache
+
+# NOTES:
+# ros-humble-isaac-ros-test is for building packages
