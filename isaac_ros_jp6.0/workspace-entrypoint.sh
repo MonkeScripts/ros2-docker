@@ -21,6 +21,7 @@ echo 'alias start-px4-agent="export FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/sh
     export RMW_FASTRTPS_USE_QOS_FROM_XML=1 && \
     MicroXRCEAgent udp4 -p 8888"' >> ~/.bash_aliases
 echo 'alias udp4-dds-config="export FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_profiles/rtps_udp_profile.xml"' >> ~/.bash_aliases
+echo 'alias clean-ws="rm -r build install log"' >> ~/.bash_aliases
 
 if [ -d /workspaces/isaac_ros-dev ]; then 
     cd /workspaces/isaac_ros-dev ; 
