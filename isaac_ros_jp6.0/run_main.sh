@@ -269,6 +269,7 @@ docker run -it --rm \
     ${DOCKER_ARGS[@]} \
     -v $ISAAC_ROS_DEV_DIR:/workspaces/isaac_ros-dev \
     -v $HOME/workspaces/drone:/workspaces/drone \
+    -v $HOME/workspaces/zed:/workspaces/zed \
     -v /etc/localtime:/etc/localtime:ro \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
