@@ -3,7 +3,8 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
-RUN apt-get update -y || true && \
+RUN --mount=type=cache,target=/var/cache/apt \
+  apt-get update -y || true && \
   apt-get install -y \
   ccache
 
