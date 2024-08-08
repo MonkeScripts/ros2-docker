@@ -22,6 +22,16 @@ echo 'alias start-px4-agent="export FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/sh
     MicroXRCEAgent udp4 -p 8888"' >> ~/.bash_aliases
 echo 'alias udp4-dds-config="export FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_profiles/rtps_udp_profile.xml"' >> ~/.bash_aliases
 echo 'alias clean-ws="rm -r build install log"' >> ~/.bash_aliases
+echo 'alias start-mpserver="ros2 launch behavior_tree mission_planner.launch.py config:=example.yaml action_name:=my_engine groot2_port:=1667 ns:=aaa"' >> ~/.bash_aliases
+echo 'alias run-test-pub="ros2 action send_goal /aaa/my_engine bb_behavior_msgs/action/Mission \"{
+    plugins: [bb, drone], 
+    target_tree: drone_behaviors/behavior_trees/test_pub.xml, 
+    tear_down_tree: "", 
+    payload: "", 
+    poses: []
+    }\""' >> ~/.bash_aliases
+echo 'alias source_cam_ws="source /workspaces/isaac_ros-dev/install/setup.bash"'
+echo 'alias source_drone_ws="source /workspaces/drone/install/setup.bash"'
 
 if [ -d /workspaces/isaac_ros-dev ]; then 
     cd /workspaces/isaac_ros-dev ; 
