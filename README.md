@@ -287,6 +287,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 ### 4. Jetson Clocks
 
+**UPDATE: After manually compiling the L4T 36.3 kernel and reflashing to enable USB modem connection (another unrelated issue), this issue seems to have been fixed.**
+
 - Even after setting Jetson Clocks to run on startup [above](#jetson-clocks-optional), it may randomly fail to start up due to a bug with `nvpmodel` (https://forums.developer.nvidia.com/t/segfault-in-usr-sbin-nvpmodel/295010/16). Simply do:
 
 ```
@@ -295,3 +297,22 @@ sudo systemctl restart jetsonClocks.service
 ```
 
 Where the second line can be replaced with `sudo jetson_clocks` if the service is not set up.
+
+### 5. ZED
+
+When starting camera stream for the ZED camera using the following command:
+
+```
+ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zedm
+```
+
+We get a `MOTION SENSORS REQUIRED` error.
+
+This error disappears after:
+
+1. Installing ZED SDK ("yes" for all options) and building the `zed_wrapper` ROS package outside the Docker container.
+2. Running the above command outside the container and interrupting.
+
+Thereafter, the error strangely disappears even within the Docker container.
+
+It seems that the ZED camera has to be started outside the Docker container before it can be started within the Docker container without errors.
