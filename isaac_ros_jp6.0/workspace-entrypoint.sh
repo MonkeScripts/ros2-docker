@@ -33,19 +33,26 @@ echo 'alias run-test-pub="ros2 action send_goal /aaa/my_engine bb_behavior_msgs/
 echo 'alias source_cam_ws="source /workspaces/isaac_ros-dev/install/setup.bash"'
 echo 'alias source_drone_ws="source /workspaces/drone/install/setup.bash"'
 
+if [ -d /workspaces/zed ]; then 
+    cd /workspaces/zed ; 
+    # echo "rosdep updating for zed....." ; 
+    # rosdep install --from-paths src --ignore-src -r -y ;
+    source install/local_setup.bash
+fi
+
 if [ -d /workspaces/isaac_ros-dev ]; then 
     cd /workspaces/isaac_ros-dev ; 
-    echo "rosdep updating....." ; 
-    rosdep install --from-paths src -y --ignore-src ; 
+    # echo "rosdep updating for isaac_ros-dev....." ; 
+    # rosdep install --from-paths src -y --ignore-src ; 
     source install/setup.bash
 fi
 
 if [ -d /workspaces/drone ]; then 
     cd /workspaces/drone ; 
-    echo "rosdep updating....." ; 
+    # echo "rosdep updating for drone....." ; 
     # TODO: Bug fix intercomm_msgs
     # rosdep install --from-paths src -y --ignore-src ; 
-    rosdep install --from-paths src --ignore-src --skip-keys intercomm_msgs -y ;
+    # rosdep install --from-paths src --ignore-src --skip-keys intercomm_msgs -y ;
     source install/setup.bash
 fi
 
