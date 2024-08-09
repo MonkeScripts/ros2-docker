@@ -300,19 +300,22 @@ Where the second line can be replaced with `sudo jetson_clocks` if the service i
 
 ### 5. ZED
 
-When starting camera stream for the ZED camera using the following command:
+When starting camera stream for the ZED camera within the Docker container using the following command:
 
 ```
 ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zedm
 ```
 
-We get a `MOTION SENSORS REQUIRED` error.
+We might see the following errors:
 
-This error disappears after:
+- No camera detected.
+- `MOTION SENSORS REQUIRED` error.
 
-1. Installing ZED SDK ("yes" for all options) and building the `zed_wrapper` ROS package outside the Docker container.
-2. Running the above command outside the container and interrupting.
+To fix these errors, do the following:
 
-Thereafter, the error strangely disappears even within the Docker container.
+1. (If they are not already done,) install the ZED SDK ("yes" for all options) and build the `zed_wrapper` ROS package outside the Docker container.
+2. Run the above command (using `zed_wrapper` to start the camera stream) outside the container and interrupt the process.
 
-It seems that the ZED camera has to be started outside the Docker container before it can be started within the Docker container without errors.
+Thereafter, the camera stream can be started within the container without errors.
+
+This fix seems to not persist between boots. If needed, repeat the process to fix the issue after boot.
