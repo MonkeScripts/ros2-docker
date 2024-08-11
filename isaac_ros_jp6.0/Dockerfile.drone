@@ -1,0 +1,22 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+# Additional dependencies for the ROS2 packages px4_msgs and px4_msg_converter
+RUN --mount=type=cache,target=/var/cache/apt \
+  apt-get update -y || true && \
+  apt-get install -y \
+  ccache
+
+# Needed for bb_localization
+RUN python3 -m pip install -U \
+  pygeodesy
+
+# Folder for scripts
+RUN mkdir -p /usr/local/bin/scripts
+# Script to install ROS dependencies
+COPY scripts/rosdep-all.sh /usr/local/bin/scripts/
+# Entrypoint script
+COPY scripts/drone-docker-entrypoint.sh /usr/local/bin/scripts/
+# Bash aliases
+COPY scripts/drone.bash_aliases /usr/local/bin/scripts/
+RUN chmod +x /usr/local/bin/scripts/*.sh
