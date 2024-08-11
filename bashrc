@@ -1,1 +1,0 @@
-source /opt/ros/humble/install/setup.bash
