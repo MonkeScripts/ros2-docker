@@ -291,7 +291,7 @@ docker run -it --rm \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="admin" \
-    --entrypoint /usr/local/bin/scripts/drone-docker-entrypoint.sh \
+    --entrypoint /usr/local/bin/scripts/drone-docker-dev-entrypoint.sh \
     --workdir /workspaces \
     $BASE_NAME \
     /bin/bash
