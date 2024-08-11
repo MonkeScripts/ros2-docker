@@ -20,6 +20,7 @@
     - [2. Husarnet](#2-husarnet)
     - [3. Sourcing of ROS Workspaces on Entry](#3-sourcing-of-ros-workspaces-on-entry)
     - [4. Jetson Clocks](#4-jetson-clocks)
+    - [5. ZED](#5-zed)
 
 # Installation
 
