@@ -14,9 +14,9 @@ if [ -f $scripts_dir/drone.bash_aliases ]; then
     cat $scripts_dir/drone.bash_aliases >> ~/.bash_aliases
 fi
 
-# Source all workspaces
-if [ -f $scripts_dir/drone-source-workspaces.sh ]; then
-    bash $scripts_dir/drone-source-workspaces.sh 
+# Add bashrc
+if [ -f $scripts_dir/drone.bashrc ]; then
+    cat $scripts_dir/drone.bashrc >> ~/.bashrc
 fi
 
 $@

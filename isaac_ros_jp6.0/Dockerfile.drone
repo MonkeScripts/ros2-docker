@@ -18,8 +18,8 @@ RUN mkdir -p $SCRIPTS_DIR
 COPY scripts/rosdep-all.sh $SCRIPTS_DIR
 # Entrypoint script
 COPY scripts/drone-docker-entrypoint.sh $SCRIPTS_DIR
-# Source ROS workspaces script
-COPY scripts/drone-source-workspaces.sh $SCRIPTS_DIR
+# Bash read command
+COPY scripts/drone.bashrc $SCRIPTS_DIR
 # Bash aliases
 COPY scripts/drone.bash_aliases $SCRIPTS_DIR
 RUN chmod +x $SCRIPTS_DIR/*.sh

@@ -197,7 +197,6 @@ if [ "$(docker ps -a --quiet --filter status=running --filter name=$CONTAINER_NA
     docker exec -i -t -u admin \
         --workdir /workspaces/isaac_ros-dev \
         $CONTAINER_NAME \
-        /usr/local/bin/scripts/drone-source-workspaces.sh \
         /bin/bash $@
     exit 0
 fi
