@@ -12,11 +12,14 @@ RUN python3 -m pip install -U \
   pygeodesy
 
 # Folder for scripts
-RUN mkdir -p /usr/local/bin/scripts
+ARG SCRIPTS_DIR=/usr/local/bin/scripts/
+RUN mkdir -p $SCRIPTS_DIR
 # Script to install ROS dependencies
-COPY scripts/rosdep-all.sh /usr/local/bin/scripts/
+COPY scripts/rosdep-all.sh $SCRIPTS_DIR
 # Entrypoint script
-COPY scripts/drone-docker-entrypoint.sh /usr/local/bin/scripts/
+COPY scripts/drone-docker-entrypoint.sh $SCRIPTS_DIR
+# Source ROS workspaces script
+COPY scripts/drone-source-workspaces.sh $SCRIPTS_DIR
 # Bash aliases
-COPY scripts/drone.bash_aliases /usr/local/bin/scripts/
-RUN chmod +x /usr/local/bin/scripts/*.sh
+COPY scripts/drone.bash_aliases $SCRIPTS_DIR
+RUN chmod +x $SCRIPTS_DIR/*.sh

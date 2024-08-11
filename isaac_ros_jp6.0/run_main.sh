@@ -189,7 +189,11 @@ CONTAINER_NAME="$BASE_NAME-container"
 # Re-use existing container.
 if [ "$(docker ps -a --quiet --filter status=running --filter name=$CONTAINER_NAME)" ]; then
     print_info "Attaching to running container: $CONTAINER_NAME"
-    docker exec -i -t -u admin --workdir /workspaces/isaac_ros-dev $CONTAINER_NAME /bin/bash $@
+    docker exec -i -t -u admin \
+        --workdir /workspaces/isaac_ros-dev \
+        $CONTAINER_NAME \
+        /usr/local/bin/scripts/drone-source-workspaces.sh \
+        /bin/bash $@
     exit 0
 fi
 
