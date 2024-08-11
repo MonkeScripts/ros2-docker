@@ -179,7 +179,6 @@ export SOURCE_DIRECTORY=$HOME/workspaces/ros2-docker/isaac_ros_jp6.0
 ln -sf $SOURCE_DIRECTORY/.isaac_ros_common-config   ~/.isaac_ros_common-config 
 ln -sf $SOURCE_DIRECTORY/run_dev.sh                 ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts/run_dev.sh
 ln -sf $SOURCE_DIRECTORY/run_main.sh                ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts/run_main.sh
-cp $SOURCE_DIRECTORY/workspace-entrypoint.sh        ${ISAAC_ROS_WS}/src/isaac_ros_common/docker/scripts/workspace-entrypoint.sh
 unset SOURCE_DIRECTORY
 ```
 
@@ -192,8 +191,6 @@ ln -sf $SOURCE_DIRECTORY/run_dev.sh                 ${ISAAC_ROS_WS}/src/isaac_ro
 ln -sf $SOURCE_DIRECTORY/run_main.sh                ${ISAAC_ROS_WS}/src/isaac_ros_common/scripts/run_main.sh
 unset SOURCE_DIRECTORY
 ```
-
-**Note that `workspace-entrypoint.sh` is copied and not linked** to support Docker's `COPY`.
 
 4. Build the docker images.
 
