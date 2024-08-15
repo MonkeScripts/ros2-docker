@@ -19,4 +19,9 @@ if [ -f $scripts_dir/drone.bashrc ]; then
     cat $scripts_dir/drone.bashrc >> ~/.bashrc
 fi
 
+# Install workspace dependencies
+shopt -s expand_aliases
+source ~/.bash_aliases
+rosdep-all
+
 $@
