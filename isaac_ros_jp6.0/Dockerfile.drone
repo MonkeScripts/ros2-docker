@@ -5,6 +5,8 @@ FROM $BASE_IMAGE
 RUN --mount=type=cache,target=/var/cache/apt \
   apt-get update -y || true && \
   apt-get install -y \
+  tmux \
+  tmuxinator \
   ccache
 
 # Needed for bb_localization
@@ -19,6 +21,11 @@ COPY scripts/rosdep-all.sh $SCRIPTS_DIR
 # Entrypoint scripts
 COPY scripts/drone-docker-dev-entrypoint.sh $SCRIPTS_DIR
 COPY scripts/drone-docker-main-entrypoint.sh $SCRIPTS_DIR
+# tmux and tmuxinator configs
+COPY configs/.tmux.conf /etc/tmux.conf
+COPY configs/.tmuxinator.yaml /workspaces/
+# tree script
+COPY scripts/tree_selection.sh /workspaces/drone/tree_selection.sh
 # Bash read command
 COPY scripts/drone.bashrc $SCRIPTS_DIR
 # Bash aliases
