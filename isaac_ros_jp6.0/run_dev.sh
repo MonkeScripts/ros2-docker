@@ -287,6 +287,7 @@ docker run -it --rm \
     -v $ISAAC_ROS_DEV_DIR:/workspaces/isaac_ros-dev \
     -v $HOME/workspaces/drone:/workspaces/drone \
     -v $HOME/workspaces/zed:/workspaces/zed \
+    -v $HOME/workspaces/ros2-docker/isaac_ros_jp6.0/config/tmuxinator:/workspaces/config/tmuxinator \
     -v /etc/localtime:/etc/localtime:ro \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
