@@ -10,7 +10,8 @@ windows:
           - udp4-dds-config
           - ros2 launch isaac_ros_main camera_main.launch.py
         - aruco_detections:
-          - ls 
+          - udp4-dds-config
+          - ros2 launch aruco_loco main.launch.py 
         - empty:
           - ls
         - empty:

@@ -29,4 +29,5 @@ windows:
           - udp4-dds-config
           - ros2 launch behavior_tree mission_planner.launch.py config:=example.yaml action_name:=my_engine groot2_port:=1667 ns:=aaa
         - editor4:
+          - tmux select-pane -t 1.1 -T test
           - echo "Waiting..."
