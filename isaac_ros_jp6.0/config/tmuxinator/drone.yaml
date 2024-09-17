@@ -36,7 +36,10 @@ windows:
           - cd /workspaces/drone/
           - udp4-dds-config
           - ros2 launch uav2_state_machine launch.py
-
+        - flir-camera:
+          - cd /workspaces/drone/
+          - udp4-dds-config
+          - ros2 launch software_uav_2 launch.py
   - camera:
       layout: tiled
       panes:

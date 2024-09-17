@@ -1,4 +1,6 @@
 # Source all ROS workspaces
+source /etc/profile.d/setup_spinnaker_gentl_64.sh 64
+source /etc/profile.d/setup_spinnaker_paths.sh
 if [ -d /workspaces/zed ]; then 
     source /workspaces/zed/install/local_setup.bash
 fi
