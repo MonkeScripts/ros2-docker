@@ -20,26 +20,15 @@ fi
 if [ -f $scripts_dir/drone.bashrc ]; then
     cat $scripts_dir/drone.bashrc >> ~/.bashrc
 fi
-# sudo rm /etc/passwd.lock
-# sudo rm /etc/shadow.lock
-# sudo rm /etc/group.lock
-# sudo rm /etc/gshadow.lock
-
-# sudo mount -o remount,rw /
-# add user
-# if (getent passwd $usrname > /dev/null)
-#     then
-#         echo "Adding user $usrname to group $grpname group."
-#         # Create user group (if not exists) and add user to it
-#             sudo usermod -a -G $grpname $usrname
-#             echo "Added user $usrname"
-#     else
-#         echo "User "\""$usrname"\"" does not exist"
-# fi
 
 # Install workspace dependencies
 shopt -s expand_aliases
 source ~/.bash_aliases
-# rosdep-all
+source /etc/profile.d/setup_spinnaker_gentl_64.sh 64
+source /etc/profile.d/setup_spinnaker_paths.sh
+sudo usermod -a -G root $usrname
+# https://unix.stackexchange.com/questions/153539/which-is-more-widely-used-chmod-777-or-chmod-arwx
+sudo chmod 777 /dev/bus/usb -R
+rosdep-all
 
 $@

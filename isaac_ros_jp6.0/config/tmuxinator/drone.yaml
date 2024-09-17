@@ -19,7 +19,7 @@ windows:
         - localization:
           - cd /workspaces/drone/
           - udp4-dds-config
-          - ros2 launch bb_localization uav2_robot_localisation.launch.py
+          - ros2 launch bb_localization uav2_robot_localisation.launch.py  
         - frames:
           - cd /workspaces/drone/
           - udp4-dds-config
@@ -28,6 +28,33 @@ windows:
           - cd /workspaces/drone/
           - udp4-dds-config
           - ros2 launch behavior_tree mission_planner.launch.py config:=example.yaml action_name:=my_engine groot2_port:=1667 ns:=aaa
-        - editor4:
-          - tmux select-pane -t 1.1 -T test
-          - echo "Waiting..."
+        - radio:
+          - cd /workspaces/drone/
+          - udp4-dds-config
+          - ros2 launch jellyfish2_radio launch.py
+        - state-machine:
+          - cd /workspaces/drone/
+          - udp4-dds-config
+          - ros2 launch uav2_state_machine launch.py
+
+  - camera:
+      layout: tiled
+      panes:
+        - imx_cameras:
+          - cd /workspaces/isaac_ros-dev
+          - udp4-dds-config
+          - ros2 launch isaac_ros_main camera_main.launch.py
+        - aruco_detections:
+          - cd /workspaces/isaac_ros-dev
+          - udp4-dds-config
+          - ros2 launch aruco_loco main.launch.py 
+        - empty:
+          - ls
+        - empty:
+          - ls
+
+
+
+
+
+
