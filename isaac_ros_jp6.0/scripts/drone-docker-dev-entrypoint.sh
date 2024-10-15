@@ -28,7 +28,7 @@ source /etc/profile.d/setup_spinnaker_gentl_64.sh 64
 source /etc/profile.d/setup_spinnaker_paths.sh
 sudo usermod -a -G root $usrname
 # https://unix.stackexchange.com/questions/153539/which-is-more-widely-used-chmod-777-or-chmod-arwx
-sudo chmod 777 /dev/bus/usb -R
+sudo chmod 777 /dev/bus/ -R
 rosdep-all
 
 $@
