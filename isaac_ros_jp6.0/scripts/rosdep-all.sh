@@ -1,11 +1,5 @@
 #!/bin/bash
 
-if [ -d /workspaces/zed ]; then 
-    cd /workspaces/zed ; 
-    echo "rosdep updating for zed....." ; 
-    rosdep install --from-paths src --ignore-src -r -y ;
-fi
-
 if [ -d /workspaces/isaac_ros-dev ]; then 
     cd /workspaces/isaac_ros-dev ; 
     echo "rosdep updating for isaac_ros-dev....." ; 
