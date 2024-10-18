@@ -6,6 +6,4 @@ ARG USERNAME=admin
 RUN ACCEPT_EULA=y
 COPY spinnaker-4.0.0.116-arm64 /spinnaker-4.0.0.116-arm64 
 WORKDIR /spinnaker-4.0.0.116-arm64
-RUN touch /home/heheehorr.txt
-RUN echo "Currently in $(pwd). Installing spinnaker" >> /home/heheehorr.txt
 RUN yes | ./install_spinnaker_arm.sh
